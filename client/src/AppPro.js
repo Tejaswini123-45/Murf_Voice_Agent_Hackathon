@@ -262,6 +262,106 @@ function AppPro() {
     return '🎤';
   };
 
+  // Chart options for better visibility
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: '#ffffff',
+          font: {
+            size: 14,
+            weight: '600',
+            family: 'Inter'
+          },
+          padding: 15
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        titleColor: '#ffffff',
+        bodyColor: '#ffffff',
+        titleFont: {
+          size: 16,
+          weight: 'bold'
+        },
+        bodyFont: {
+          size: 14
+        },
+        padding: 12,
+        borderColor: 'rgba(167, 139, 250, 0.5)',
+        borderWidth: 1
+      }
+    },
+    scales: {
+      y: {
+        ticks: {
+          color: '#ffffff',
+          font: {
+            size: 13,
+            weight: '600'
+          }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        }
+      },
+      x: {
+        ticks: {
+          color: '#ffffff',
+          font: {
+            size: 13,
+            weight: '600'
+          }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        }
+      }
+    }
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+          color: '#ffffff',
+          font: {
+            size: 15,
+            weight: '700',
+            family: 'Inter'
+          },
+          padding: 20,
+          usePointStyle: true,
+          pointStyle: 'circle'
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        titleColor: '#ffffff',
+        bodyColor: '#ffffff',
+        titleFont: {
+          size: 16,
+          weight: 'bold'
+        },
+        bodyFont: {
+          size: 15,
+          weight: '600'
+        },
+        padding: 15,
+        borderColor: 'rgba(167, 139, 250, 0.5)',
+        borderWidth: 2,
+        displayColors: true
+      }
+    }
+  };
+
   // Chart data
   const categoryChartData = spendingData ? {
     labels: spendingData.map(item => item.category),
@@ -269,26 +369,40 @@ function AppPro() {
       label: 'Spending by Category',
       data: spendingData.map(item => item.total),
       backgroundColor: [
-        'rgba(255, 99, 132, 0.8)',
-        'rgba(54, 162, 235, 0.8)',
-        'rgba(255, 206, 86, 0.8)',
-        'rgba(75, 192, 192, 0.8)',
-        'rgba(153, 102, 255, 0.8)',
-        'rgba(255, 159, 64, 0.8)',
+        'rgba(255, 99, 132, 0.9)',
+        'rgba(54, 162, 235, 0.9)',
+        'rgba(255, 206, 86, 0.9)',
+        'rgba(75, 192, 192, 0.9)',
+        'rgba(153, 102, 255, 0.9)',
+        'rgba(255, 159, 64, 0.9)',
       ],
-      borderWidth: 0,
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 2,
     }]
   } : null;
 
   const trendsChartData = trendsData ? {
     labels: trendsData.map(item => new Date(item.day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
     datasets: [{
-      label: 'Daily Spending',
+      label: 'Daily Spending (₹)',
       data: trendsData.map(item => item.total),
       borderColor: 'rgb(102, 126, 234)',
-      backgroundColor: 'rgba(102, 126, 234, 0.1)',
+      backgroundColor: 'rgba(102, 126, 234, 0.2)',
       tension: 0.4,
       fill: true,
+      borderWidth: 3,
+      pointRadius: 5,
+      pointBackgroundColor: 'rgb(102, 126, 234)',
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      pointHoverRadius: 7
     }]
   } : null;
 
@@ -380,7 +494,7 @@ function AppPro() {
           {categoryChartData && (
             <div className="chart-container">
               <h3>Spending by Category</h3>
-              <Doughnut data={categoryChartData} options={{ responsive: true, maintainAspectRatio: true }} />
+              <Doughnut data={categoryChartData} options={doughnutOptions} />
             </div>
           )}
 
@@ -388,7 +502,7 @@ function AppPro() {
           {trendsChartData && (
             <div className="chart-container">
               <h3>7-Day Spending Trend</h3>
-              <Line data={trendsChartData} options={{ responsive: true, maintainAspectRatio: true }} />
+              <Line data={trendsChartData} options={chartOptions} />
             </div>
           )}
 
