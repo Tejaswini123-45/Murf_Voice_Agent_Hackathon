@@ -362,6 +362,9 @@ voicebank/
 
 ---
 
+### 🎥 Demo Video
+[Click here to watch the demo](murfhackathon.mp4)
+
 ## 🐛 Troubleshooting
 
 ### Microphone Not Working?
